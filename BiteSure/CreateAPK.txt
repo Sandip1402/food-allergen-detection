@@ -1,0 +1,29 @@
+To create an APK file using Expo on Windows, you must use EAS Build (Expo Application Services), as modern Expo versions no longer support local expo build:android commands.Here is the exact step-by-step process to generate your APK directly inside your VS Code terminal.
+1. Install EAS CLI globallyOpen your VS Code terminal (press Ctrl + ` ) and run this command to install the required tools:bashnpm install -g eas-cli
+
+2. Log In to Your Expo AccountYou need an Expo account because the APK will be built securely in the cloud. Run the following command and enter your credentials:basheas login
+
+3. Initialize EAS ConfigurationConfigure your project for cloud builds by running:basheas build:configure
+Select Android when prompted.This command will automatically create an eas.json file in your root project directory.
+
+4. Configure eas.json to Output an APKBy default, EAS generates an .aab file (meant for the Google Play Store). To force it to generate an installable .apk file, open the newly created eas.json file in VS Code and update the preview profile to match this:json{
+  "cli": {
+    "version": ">= 10.0.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {}
+  }
+}
+
+5. Start the APK BuildRun this exact command in your terminal to trigger the APK build process:basheas build --profile preview --platform android
+Keystore Prompt: If Expo asks to generate a new keystore for you, type Y (Yes).Wait for completion: The CLI will upload your code to the Expo Dashboard and queue the build. This typically takes 5 to 10 minutes.6. Download Your APK FileOnce the build finishes, the VS Code terminal will print a sharable download link and a QR Code.You can scan the QR code with your Android phone to download and install the APK directly.Alternatively, click the link to download the .apk file straight to your Windows machine.

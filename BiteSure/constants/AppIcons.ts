@@ -1,0 +1,17 @@
+export const AppIcons = {
+  appearance: "theme-light-dark",
+  notifications: "bell-outline",
+  allergies: "allergy",
+  emergency: "card-account-details-outline",
+  history: "history",
+  settings: "cog-outline",
+  help: "help-circle-outline",
+  delete: "delete-outline",
+  about: "information-outline",
+  language: "translate",
+  notes: "file-document-outline",
+  privacy: "shield-check-outline",
+  download: "download-outline",
+  star: "star-outline",
+  information: "information-outline",
+} as const;
