@@ -1,4 +1,5 @@
 import { Switch, Text } from "react-native";
+import { router } from "expo-router";
 
 import Screen from "@/components/common/Screen";
 import SectionHeader from "@/components/common/SectionHeader";
@@ -11,7 +12,7 @@ import { AppIcons } from "@/constants/AppIcons";
 import { APP_NAME, APP_VERSION } from "@/constants/AppConstants";
 
 export default function Settings() {
-    
+
   const { colors, typography, spacing } = useTheme();
 
   return (
@@ -25,7 +26,9 @@ export default function Settings() {
           icon={AppIcons.appearance}
           title="Appearance"
           subtitle="System"
-          onPress={() => {}}
+          onPress={() =>
+            router.push("/settings/appearance")
+          }
         />
 
         <SettingsItem
@@ -34,7 +37,7 @@ export default function Settings() {
           right={
             <Switch
               value={true}
-              onValueChange={() => {}}
+              onValueChange={() => { }}
             />
           }
           showChevron={false}
@@ -44,7 +47,7 @@ export default function Settings() {
           icon={AppIcons.language}
           title="Language"
           subtitle="English"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
       </SettingsSection>
@@ -54,19 +57,19 @@ export default function Settings() {
         <SettingsItem
           icon={AppIcons.allergies}
           title="Manage Allergies"
-          onPress={() => {}}
+          onPress={() => router.push("/settings/allergies")}
         />
 
         <SettingsItem
           icon={AppIcons.emergency}
           title="Emergency Contacts"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <SettingsItem
           icon={AppIcons.notes}
           title="Medical Notes"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
       </SettingsSection>
@@ -76,19 +79,19 @@ export default function Settings() {
         <SettingsItem
           icon={AppIcons.privacy}
           title="Privacy Policy"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <SettingsItem
           icon={AppIcons.download}
           title="Export Scan History"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <SettingsItem
           icon={AppIcons.delete}
           title="Clear Scan History"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
       </SettingsSection>
@@ -98,20 +101,20 @@ export default function Settings() {
         <SettingsItem
           icon={AppIcons.help}
           title="Help Center"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <SettingsItem
           icon={AppIcons.star}
           title="Rate App"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
         <SettingsItem
           icon={AppIcons.information}
           title="About"
           subtitle="Version 1.0.0"
-          onPress={() => {}}
+          onPress={() => { }}
         />
 
       </SettingsSection>

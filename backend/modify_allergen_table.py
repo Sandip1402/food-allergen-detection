@@ -11,9 +11,16 @@ df[target_column] = df[target_column].fillna("").str.lower()
 
 # 4. Clean list of unique allergens
 allergens = [
-                "peanut", "almond", "pistachio", "milk", "butter", "cheese", "paneer", "ghee",
-                "egg", "fish", "prawn", "moong dal", "chana dal", "tomato", "banana", "capsicum",
-                "mushroom", "bitter gourd", "mustard", "coriander", "chocolate", "chicken", "mutton"
+    "Peanut", "Almond", "Pistachio", "Cashew",
+    "Milk", "Butter", "Cheese", "Paneer", "Ghee",
+    "Egg",
+    "Fish", "Prawn",
+    "Moong dal", "Chana dal",
+    "Tomato", "Banana",
+    "Capsicum", "Mushroom", "Bitter gourd",
+    "Mustard",
+    "Chocolate",
+    "Chicken", "Mutton"
             ]
 
 # 5. Create binary 1 or 0 columns

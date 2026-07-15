@@ -11,7 +11,8 @@ import { useTheme } from "@/hooks/useTheme";
 import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import SummaryCard from "@/components/SummaryCard";
+
+import SummaryCard from "@/components/results/SummaryCard";
 
 export default function Home() {
 

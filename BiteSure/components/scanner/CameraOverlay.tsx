@@ -8,7 +8,7 @@ const STROKE = 4;
 const FRAME_COLOR = "#FFFFFF";
 
 export default function CameraOverlay() {
-  const { colors, spacing, typography, radius } = useTheme();
+  const { spacing, typography, radius } = useTheme();
 
 
   return (

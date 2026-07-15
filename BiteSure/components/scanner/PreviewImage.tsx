@@ -1,34 +1,46 @@
 import { Image, View } from "react-native";
+import { useState } from "react";
+import ScanOverlay from "@/components/scanner/ScanOverlay";
 
-import { useTheme } from "@/hooks/useTheme";
 
 interface PreviewImageProps {
-  uri: string;
+  imageUri: string;
+  isAnalyzing: boolean;
+  statusMessage: string;
 }
 
 export default function PreviewImage({
-  uri,
+  imageUri,
+  isAnalyzing,
+  statusMessage,
 }: PreviewImageProps) {
-  const { radius, shadows, spacing } = useTheme();
+
+  const [imageHeight, setImageHeight] = useState(0);
 
   return (
-    <View
+    <View className="mx-5 mt-6 rounded-3xl bg-card p-4 shadow-lg"
+      onLayout={(e) =>
+        setImageHeight(e.nativeEvent.layout.height)
+      }
       style={{
-        flex: 1,
-        paddingVertical: spacing.lg
+        overflow: "hidden",
+        borderRadius: 24,
       }}
     >
+
       <Image
-        source={{ uri }}
+        source={{ uri: imageUri }}
         resizeMode="contain"
+        className="w-full rounded-2xl"
         style={{
-          width: "100%",
-          height: "100%",
-
-          borderRadius: radius.xl,
-
-          ...shadows.card,
+          aspectRatio: 3 / 4,
         }}
+      />
+
+      <ScanOverlay
+        visible={isAnalyzing}
+        message={statusMessage}
+        height={imageHeight}
       />
     </View>
   );

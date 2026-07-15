@@ -51,8 +51,13 @@ export default function PermissionView({
           We only use the camera to scan ingredient labels for allergy detection.
         </Text>
 
-        <View style={{ marginTop: spacing["3xl"], width: "100%" }}>
+        <View style={{  marginTop: spacing["3xl"], 
+                        width: "100%", 
+                        justifyContent: "center",
+                        alignItems: "center" 
+                    }}>
           <Button
+            variant="ghost"
             title="Grant Permission"
             onPress={onGrantPermission}
           />

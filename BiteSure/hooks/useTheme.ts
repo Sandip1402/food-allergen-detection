@@ -3,15 +3,15 @@ import { Radius } from "@/constants/Radius";
 import { Shadows } from "@/constants/Shadows";
 import { Spacing } from "@/constants/Spacing";
 import { Typography } from "@/constants/Typography";
-import { useColorScheme } from "react-native";
+import { useAppTheme } from "@/providers/ThemeProvider";
 
 export function useTheme() {
-  const scheme = useColorScheme() ?? "light";
+  const { theme } = useAppTheme();
 
   return {
-    isDark: scheme === "dark",
+    isDark: theme === "dark",
 
-    colors: Colors[scheme],
+    colors: Colors[theme],
 
     spacing: Spacing,
     radius: Radius,
