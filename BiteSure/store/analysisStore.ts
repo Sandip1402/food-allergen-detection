@@ -15,6 +15,10 @@ export interface AnalysisResult {
 export interface analysisStore {
   imageUri: string | null;
 
+  mode: "food" | "ingredient";
+
+  setMode: (mode: "food" | "ingredient") => void;
+
   result: AnalysisResult | null;
 
   isProcessing: boolean;
@@ -31,6 +35,8 @@ export interface analysisStore {
 export const useAnalysisStore = create<analysisStore>((set) => ({
   imageUri: null,
 
+  mode: "food",
+
   result: null,
 
   isProcessing: false,
@@ -38,6 +44,11 @@ export const useAnalysisStore = create<analysisStore>((set) => ({
   setImage: (uri) =>
     set({
       imageUri: uri,
+    }),
+
+  setMode: (mode) =>
+    set({
+      mode,
     }),
 
   setProcessing: (value) =>
@@ -53,6 +64,7 @@ export const useAnalysisStore = create<analysisStore>((set) => ({
   clear: () =>
     set({
       imageUri: null,
+      mode: "food",
       result: null,
       isProcessing: false,
     }),

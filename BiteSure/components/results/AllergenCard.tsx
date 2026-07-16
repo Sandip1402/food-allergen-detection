@@ -4,8 +4,15 @@ import { CircleAlert } from "lucide-react-native";
 import Card from "@/components/common/Card";
 import { useTheme } from "@/hooks/useTheme";
 
+interface Allergen {
+    id: string;
+    name: string;
+    severity: string;
+    description: string;
+}
+
 interface AllergenCardProps {
-    allergens: string[];
+    allergens: Allergen[];
 }
 
 export default function AllergenCard({
@@ -50,7 +57,7 @@ export default function AllergenCard({
                 >
                     {allergens.map((allergen) => (
                         <View
-                            key={allergen}
+                            key={allergen.id}
                             style={{
                                 flexDirection: "row",
                                 alignItems: "center",
@@ -77,7 +84,7 @@ export default function AllergenCard({
                                     fontWeight: typography.weight.semibold,
                                 }}
                             >
-                                {allergen}
+                                {allergen.name}
                             </Text>
                         </View>
                     ))}
