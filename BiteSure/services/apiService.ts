@@ -2,7 +2,9 @@ import axios, { AxiosInstance } from "axios";
 import { ScanResult, Allergen } from "@/context/allergenStore";
 
 // Replace with your actual backend URL
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3000/api";
+const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL ||
+  "http://10.159.156.148:8000/api";
 
 class ApiService {
   private api: AxiosInstance;
@@ -11,20 +13,35 @@ class ApiService {
     this.api = axios.create({
       baseURL: API_BASE_URL,
       timeout: 30000,
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
   }
 
   // Scan food/product for allergens
-  async scanImage(imageData: {
-    uri: string;
-    base64?: string;
-    productName?: string;
-  }): Promise<ScanResult> {
+  async scanImage(
+    imageUri: string,
+    mode: "food" | "ingredient"
+  ) {
     try {
-      const response = await this.api.post<ScanResult>("/scan", imageData);
+      const formData = new FormData();
+
+      formData.append("mode", mode);
+
+      formData.append("image", {
+        uri: imageUri,
+        type: "image/jpeg",
+        name: "scan.jpg",
+      } as any);
+
+      const response = await this.api.post(
+        "/analyze",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       return response.data;
     } catch (error) {
       throw this.handleError(error);

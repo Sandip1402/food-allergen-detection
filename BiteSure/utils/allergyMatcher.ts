@@ -7,9 +7,15 @@ export function normalizeAllergen(
         .replace(/s$/, "");
 }
 
+type DetectedAllergen = {
+    id: string;
+    name: string;
+    severity: string;
+    description: string;
+};
 
 export function matchUserAllergies(
-    detectedAllergens: string[],
+    detectedAllergens: DetectedAllergen[],
     userAllergies: string[]
 ) {
 
@@ -21,7 +27,7 @@ export function matchUserAllergies(
         detectedAllergens.filter(
             (allergen) =>
                 normalizedUserAllergies.includes(
-                    normalizeAllergen(allergen)
+                    normalizeAllergen(allergen.name)
                 )
         );
 
@@ -30,7 +36,7 @@ export function matchUserAllergies(
         detectedAllergens.filter(
             (allergen) =>
                 !normalizedUserAllergies.includes(
-                    normalizeAllergen(allergen)
+                    normalizeAllergen(allergen.name)
                 )
         );
 

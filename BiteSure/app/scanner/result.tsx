@@ -33,7 +33,7 @@ export default function ResultScreen() {
 
 
     const detectedAllergens =
-        parsedResult?.allergens ?? [];
+         parsedResult?.detectedAllergens ?? [];
 
 
     const userAllergies =
