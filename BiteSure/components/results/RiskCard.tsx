@@ -8,47 +8,45 @@ import {
 import { useTheme } from "@/hooks/useTheme";
 
 interface RiskCardProps {
-    allergenCount: number;
+    risk: "safe" | "warning" | "unsafe";
 }
 
 export default function RiskCard({
-    allergenCount,
+    risk,
 }: RiskCardProps) {
-    const { colors, spacing, typography, radius } = useTheme();
 
-    const risk =
-        allergenCount === 0
-            ? "safe"
-            : allergenCount <= 2
-                ? "warning"
-                : "danger";
+    const {
+        colors,
+        spacing,
+        typography,
+        radius,
+    } = useTheme();
 
     const config = {
         safe: {
-            title: "SAFE",
-            subtitle: "No allergens detected.",
-            background: colors.status.safe.background,
-            text: colors.status.safe.text,
+            title: "Safe",
+            description: "No allergens were detected.",
+            color: colors.success,
+            background: `${colors.success}20`,
             Icon: ShieldCheck,
         },
 
         warning: {
-            title: "CAUTION",
-            subtitle: `${allergenCount} potential allergen${allergenCount > 1 ? "s" : ""
-                } detected.`,
-            background: colors.status.warning.background,
-            text: colors.status.warning.text,
+            title: "Warning",
+            description: "Potential allergens detected.",
+            color: colors.warning,
+            background: `${colors.warning}20`,
             Icon: TriangleAlert,
         },
 
-        danger: {
-            title: "DANGER",
-            subtitle: `${allergenCount} allergens detected.`,
-            background: colors.status.danger.background,
-            text: colors.status.danger.text,
+        unsafe: {
+            title: "Unsafe",
+            description: "High-risk allergens detected.",
+            color: colors.danger,
+            background: `${colors.danger}20`,
             Icon: CircleAlert,
         },
-    };
+    } as const;
 
     const current = config[risk];
 
@@ -60,19 +58,18 @@ export default function RiskCard({
                 padding: spacing.xl,
                 marginHorizontal: spacing.lg,
                 marginTop: spacing.lg,
-
                 alignItems: "center",
             }}
         >
             <current.Icon
                 size={48}
-                color={current.text}
+                color={current.color}
             />
 
             <Text
                 style={{
                     marginTop: spacing.md,
-                    color: current.text,
+                    color: current.color,
                     fontSize: typography.size.heading,
                     fontWeight: typography.weight.bold,
                 }}
@@ -83,12 +80,12 @@ export default function RiskCard({
             <Text
                 style={{
                     marginTop: spacing.sm,
-                    color: current.text,
+                    color: colors.text,
                     fontSize: typography.size.body,
                     textAlign: "center",
                 }}
             >
-                {current.subtitle}
+                {current.description}
             </Text>
         </View>
     );

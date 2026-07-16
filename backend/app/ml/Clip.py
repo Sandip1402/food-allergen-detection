@@ -2,22 +2,30 @@ import pandas as pd
 from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
 import torch
+from pathlib import Path
 
-
-
+# Load pre-trained CLIP model from local cache for image-text similarity
 model_name = "openai/clip-vit-base-patch32"
+model = CLIPModel.from_pretrained(
+    model_name,
+    local_files_only=True
+)
 
-model = CLIPModel.from_pretrained(model_name)
 processor = CLIPProcessor.from_pretrained(
     model_name,
-    use_fast=True
+    local_files_only=True
 )
 model.eval() 
 
+BASE_DIR = Path(__file__).resolve().parents[2]
+DATASET_DIR = BASE_DIR / "datasets"
 
-df = pd.read_csv("food_data.csv")
+df = pd.read_csv(DATASET_DIR / "food_data_alphabetically_sorted.csv")
 FOOD_LABELS = df["Food_Name"].tolist()
 
+
+
+# Predict food name from an image using CLIP
 def predict_food(image_path, labels):
     """
     Predict food name using CLIP (image-text similarity)
@@ -45,4 +53,3 @@ def predict_food(image_path, labels):
     confidence = probs[0][best_idx].item()
 
     return food_name, confidence
-

@@ -11,6 +11,10 @@ import PreviewActions from "@/components/scanner/PreviewActions";
 import { useAnalysisStore } from "@/store/analysisStore";
 import { apiService } from "@/services/apiService";
 
+import { ScanResult } from "@/context/allergenStore";
+
+import { useHistoryStore } from "@/store/historyStore";
+
 const ANALYSIS_MESSAGES = [
   "Detecting ingredients...",
   "Reading ingredients...",
@@ -30,6 +34,11 @@ export default function PreviewScreen() {
 
   const statusMessage = ANALYSIS_MESSAGES[statusIndex];
 
+  const addScan =
+    useHistoryStore(
+      (state) => state.addScan
+    );
+
   const handleAnalyze = async () => {
     if (!imageUri) return;
     if (isAnalyzing) return;
@@ -38,7 +47,28 @@ export default function PreviewScreen() {
 
     try {
       // Call FastAPI
-      const result = await apiService.scanImage({ uri: imageUri });
+      // const result = await apiService.scanImage({ uri: imageUri });
+
+      // Mock result for demonstration
+      const result: ScanResult = {
+        id: Date.now().toString(),
+        imageUri,
+        detectedAllergens: [
+            {
+                id: "1",
+                name: "Peanut",
+                severity: "high",
+                description: "",
+            },
+        ],
+        risk: "warning",
+        confidence: 94,
+        timestamp: new Date().toISOString(),
+        productName: "Unknown Product",
+    };
+
+      // Save to history
+      addScan(result);      
 
       // Navigate to results
       router.push({
