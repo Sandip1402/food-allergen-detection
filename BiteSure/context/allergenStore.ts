@@ -10,9 +10,15 @@ export interface Allergen {
 export interface ScanResult {
   id: string;
   imageUri: string;
+
   detectedAllergens: Allergen[];
+
+  risk: "safe" | "warning" | "unsafe";
+
   confidence: number;
+
   timestamp: string;
+
   productName?: string;
   notes?: string;
 }

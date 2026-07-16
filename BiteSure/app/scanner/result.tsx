@@ -56,9 +56,7 @@ export default function ResultScreen() {
 
 
             <RiskCard
-                allergenCount={
-                    detectedAllergens.length
-                }
+                risk={parsedResult.risk}
             />
 
 
