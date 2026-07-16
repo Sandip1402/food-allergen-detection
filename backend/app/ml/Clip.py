@@ -20,7 +20,7 @@ model.eval()
 BASE_DIR = Path(__file__).resolve().parents[2]
 DATASET_DIR = BASE_DIR / "datasets"
 
-df = pd.read_csv(DATASET_DIR / "food_data_alphabetically_sorted.csv")
+df = pd.read_csv(DATASET_DIR / "indian_food_ingredients.csv")
 FOOD_LABELS = df["Food_Name"].tolist()
 
 

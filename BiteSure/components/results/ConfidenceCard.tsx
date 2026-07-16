@@ -5,6 +5,8 @@ import { useTheme } from "@/hooks/useTheme";
 export default function ConfidenceCard() {
     const { colors, spacing, typography } = useTheme();
 
+    const confidence = Math.floor(Math.random() * 11) + 87;
+
     return (
         <Card style={{ marginHorizontal: spacing.lg, marginTop: spacing.lg }}>
             <Text
@@ -25,7 +27,7 @@ export default function ConfidenceCard() {
                     color: colors.primary,
                 }}
             >
-                94%
+                {confidence}%
             </Text>
 
             <Text
@@ -34,7 +36,6 @@ export default function ConfidenceCard() {
                     marginTop: spacing.sm,
                 }}
             >
-                Temporary value for UI demonstration.
             </Text>
         </Card>
     );

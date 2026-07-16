@@ -28,8 +28,8 @@ export default function ModeToggle({
           <Text
             className={`font-semibold ${
               mode === "food"
-                ? "text-white"
-                : "text-foreground"
+                ? "text-sky-500"
+                : "bg-transparent"
             }`}
           >
             🍔 Food
@@ -47,7 +47,7 @@ export default function ModeToggle({
           <Text
             className={`font-semibold ${
               mode === "ingredient"
-                ? "text-white"
+                ? "text-sky-500"
                 : "text-foreground"
             }`}
           >

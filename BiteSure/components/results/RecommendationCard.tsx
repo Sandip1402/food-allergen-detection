@@ -14,7 +14,7 @@ export default function RecommendationCard({
     const recommendation =
         allergens.length === 0
             ? "No known allergens were detected. Consume according to your dietary preferences."
-            : `Avoid consuming this product if you are allergic to ${allergens.join(", ")}.`;
+            : `Avoid consuming this product if you are allergic.`;
 
     return (
         <Card style={{ marginHorizontal: spacing.lg, marginTop: spacing.lg }}>

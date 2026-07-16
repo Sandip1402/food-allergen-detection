@@ -69,11 +69,11 @@ export default function PreviewActions({
                 <View style={{ flex: 1.6 }}>
                     <Button
                         title={isAnalyzing ? "Analyzing..." : "Analyze"}
-                        leftIcon={<ScanSearch size={18} color={colors.buttonPrimaryText} />}
+                        leftIcon={<ScanSearch size={18} color={colors.text} />}
                         onPress={onAnalyze}
                         loading={isAnalyzing}
                         disabled={isAnalyzing}
-                    />
+                        />
                 </View>
             </View>
         </View>
