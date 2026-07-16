@@ -45,7 +45,7 @@ model.eval()
 def extract_text(image_path):
     image = Image.open(image_path)
     text = pytesseract.image_to_string(image)
-    return normalize_text(text)
+    return clean_ingredients(text)
 
 
 def normalize_text(text):
@@ -53,6 +53,58 @@ def normalize_text(text):
     text = re.sub(r"[^a-z0-9\s]", " ", text)
     text = re.sub(r"\s+", " ", text)
     return text.strip()
+
+def clean_ingredients(text):
+    """
+    Convert OCR output into a clean comma-separated ingredient string.
+    """
+
+    text = normalize_text(text)
+
+    # Remove common packaging words
+    remove_words = [
+        "ingredients",
+        "contains",
+        "may contain",
+        "warning",
+        "allergen",
+        "nutrition facts"
+    ]
+
+    for word in remove_words:
+        text = text.replace(word, " ")
+
+    # Normalize spaces
+    text = re.sub(r"\s+", " ", text).strip()
+
+    # Common allergens that should become separate ingredients
+    common_items = [
+        "milk",
+        "wheat",
+        "soy",
+        "soybean",
+        "egg",
+        "eggs",
+        "tree nuts",
+        "peanut",
+        "peanuts",
+        "almond",
+        "cashew",
+        "walnut",
+        "barley",
+        "rye",
+        "oats",
+        "sesame"
+    ]
+
+    for item in common_items:
+        text = text.replace(item, f", {item},")
+
+    # Remove duplicate commas
+    text = re.sub(r"\s*,\s*", ", ", text)
+    text = re.sub(r",+", ",", text)
+
+    return text.strip(" ,")
 
 
 # -----------------------------
