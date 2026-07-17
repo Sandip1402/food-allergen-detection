@@ -20,6 +20,7 @@ export interface ScanResult {
   timestamp: string;
 
   productName?: string;
+  
   notes?: string;
 }
 

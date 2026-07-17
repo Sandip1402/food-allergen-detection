@@ -3,6 +3,8 @@ import { CircleAlert } from "lucide-react-native";
 
 import Card from "@/components/common/Card";
 import { useTheme } from "@/hooks/useTheme";
+import { ScanResult } from "@/context/allergenStore";
+import { ScanResult } from "@/context/allergenStore";
 
 interface Allergen {
     id: string;
@@ -12,10 +14,14 @@ interface Allergen {
 }
 
 interface AllergenCardProps {
+    productName: ScanResult["productName"];
+    productName: ScanResult["productName"];
     allergens: Allergen[];
+    
 }
 
 export default function AllergenCard({
+    productName,
     allergens,
 }: AllergenCardProps) {
     const { colors, spacing, typography, radius } = useTheme();
@@ -35,7 +41,8 @@ export default function AllergenCard({
                     marginBottom: spacing.lg,
                 }}
             >
-                Detected Allergens
+                Detected Allergens - {productName}
+                Detected Allergens - {productName}
             </Text>
 
             {allergens.length === 0 ? (

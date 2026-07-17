@@ -4,7 +4,7 @@ import { ScanResult, Allergen } from "@/context/allergenStore";
 // Replace with your actual backend URL
 const API_BASE_URL =
   process.env.EXPO_PUBLIC_API_URL ||
-  "http://10.159.156.148:8000/api";
+  "http://10.78.82.219:8000/api";
 
 class ApiService {
   private api: AxiosInstance;

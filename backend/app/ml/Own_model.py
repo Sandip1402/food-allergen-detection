@@ -33,9 +33,9 @@ def analyze_allergens(ingredients):
     # Get prediction probabilities
     probs = model.predict_proba(X)[0]
 
-    print("\nProbabilities:")
-    for label, prob in zip(labels, probs):
-        print(f"{label}: {prob:.4f}")
+    # print("\nProbabilities:")
+    # for label, prob in zip(labels, probs):
+    #     print(f"{label}: {prob:.4f}")
 
     # Set custom threshold
     threshold = 0.30
