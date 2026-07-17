@@ -105,7 +105,7 @@ export default function ResultScreen() {
 
                     <AllergyMatchCard
                         matches={
-                            allergyMatch.matches
+                            allergyMatch.matches.map(m => (m as any).name ?? (m as any).allergen ?? String(m))
                         }
                     />
 

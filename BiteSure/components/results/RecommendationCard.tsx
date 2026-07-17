@@ -2,19 +2,28 @@ import { Text } from "react-native";
 import Card from "@/components/common/Card";
 import { useTheme } from "@/hooks/useTheme";
 
+interface DetectedAllergen {
+    id: string;
+    name: string;
+    severity: string;
+    description: string;
+}
+
 interface Props {
-    allergens: string[];
+    allergens: DetectedAllergen[];
 }
 
 export default function RecommendationCard({
     allergens,
 }: Props) {
     const { colors, spacing, typography } = useTheme();
+    
+    const allergenNames = allergens.map((a) => a.name);
 
     const recommendation =
-        allergens.length === 0
+        allergenNames.length === 0
             ? "No known allergens were detected. Consume according to your dietary preferences."
-            : `Avoid consuming this product if you are allergic.`;
+            : `Avoid consuming this product if you are allergic to ${allergenNames.join(", ")}.`;
 
     return (
         <Card style={{ marginHorizontal: spacing.lg, marginTop: spacing.lg }}>

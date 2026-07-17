@@ -54,6 +54,60 @@ def normalize_text(text):
     text = re.sub(r"\s+", " ", text)
     return text.strip()
 
+
+import re
+
+KNOWN_INGREDIENTS = [
+    "milk solids",
+    "milk",
+    "cocoa butter",
+    "cocoa solids",
+    "sugar",
+    "butter",
+    "wheat flour",
+    "wheat",
+    "soybean oil",
+    "soy",
+    "egg",
+    "tree nuts",
+    "peanut",
+    "almond",
+    "cashew",
+    "walnut",
+    "barley",
+    "rye",
+    "oats",
+    "salt",
+    "cocoa",
+    "vanilla",
+    "emulsifier",
+    "lecithin"
+]
+
+def extract_ingredients(text):
+    if not text:
+        return []
+
+    text = normalize_text(text)
+
+    # Keep only the Ingredients section
+    contains_text = ""
+
+    if "contains" in text:
+        text, contains_text = text.split("contains", 1)
+
+    elif "may contain" in text:
+        text, contains_text = text.split("may contain", 1)
+
+    detected = []
+
+    for ingredient in KNOWN_INGREDIENTS:
+        if re.search(rf"\b{re.escape(ingredient)}\b", text):
+            detected.append(ingredient)
+
+    return sorted(set(detected)), contains_text
+
+
 def clean_ingredients(text):
     """
     Convert OCR output into a clean comma-separated ingredient string.
@@ -121,11 +175,7 @@ def load_allergens(csv_path):
 
     return dict(allergens)
 
-
-ALLERGENS = load_allergens(
-    DATASET_DIR / "allergens.csv"
-)
-
+ALLERGENS = load_allergens(DATASET_DIR / "allergens.csv")
 
 # -----------------------------
 # Generate BERT Embeddings
@@ -144,43 +194,50 @@ def get_embedding(text):
 
     return outputs.last_hidden_state.mean(dim=1)
 
-
 # -----------------------------
 # Detect Allergens
 # -----------------------------
-def analyze_allergens(text, similarity_threshold=0.60):
-    if text is None:
-        text = ""
+def detect_allergens(ingredients, similarity_threshold=0.60):
+    if isinstance(ingredients, list):
+        text = " ".join(ingredients)
+    else:
+        text = ingredients
 
-    text = str(text)
-
-    detected = {}
+    detected = []
 
     text_embedding = get_embedding(text)
 
-    for category, keywords in ALLERGENS.items():
-
-        found = []
-
+    for _, keywords in ALLERGENS.items():
         for keyword in keywords:
 
-            # Exact Match
-            if re.search(rf"\b{re.escape(keyword)}\b", text):
-                found.append(keyword)
+            # Exact match gets highest priority
+            if keyword.lower() in text.lower():
+                detected.append(keyword)
                 continue
 
-            # Semantic Match
-            keyword_embedding = get_embedding(keyword)
+            # Semantic match
+            # keyword_embedding = get_embedding(keyword)
 
-            similarity = torch.cosine_similarity(
-                text_embedding,
-                keyword_embedding
-            ).item()
+            # similarity = torch.cosine_similarity(
+            #     text_embedding,
+            #     keyword_embedding
+            # ).item()
 
-            if similarity >= similarity_threshold:
-                found.append(keyword)
+            # if similarity >= similarity_threshold:
+            #     detected.append(keyword)
 
-        if found:
-            detected[category] = sorted(set(found))
+    return sorted(set(detected))
 
-    return detected
+def analyze_ingredient_image(image_path):
+    text = extract_text(image_path)
+
+    ingredients, contains_text = extract_ingredients(text)
+
+    allergens = detect_allergens(
+        " ".join(ingredients) + " " + contains_text
+    )
+
+    print("Ingredients:", ingredients)
+    print("Contains:", contains_text)
+
+    return ingredients, allergens

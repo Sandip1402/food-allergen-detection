@@ -43,8 +43,8 @@ export default function PreviewScreen() {
       // Call FastAPI
       const response = await apiService.scanImage(imageUri, mode);
 
-      // console.log("Backend Response:");
-      // console.log(JSON.stringify(response, null, 2));
+      console.log("Backend Response:");
+      console.log(JSON.stringify(response, null, 2));
 
       // Convert backend response to frontend ScanResult
       const result: ScanResult = {
@@ -69,8 +69,8 @@ export default function PreviewScreen() {
         productName: response.food ?? "Ingredient Analysis",
       };
 
-      console.log("Mapped ScanResult:");
-      console.log(JSON.stringify(result, null, 2));
+      // console.log("Mapped ScanResult:");
+      // console.log(JSON.stringify(result, null, 2));
 
       addScan(result);
 
